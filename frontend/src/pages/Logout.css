@@ -1,0 +1,106 @@
+/* Logout.css */
+
+.logout-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.logout-card {
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+.logout-icon {
+    color: #6c757d;
+}
+
+h2 {
+    color: #343a40;
+    font-size: 1.5rem;
+}
+
+p.text-muted {
+    color: #6c757d !important;
+}
+
+.btn-lg {
+    font-size: 1rem;
+    padding: 10px 20px;
+}
+
+.btn-primary {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-primary:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Mobile styles */
+@media (max-width: 576px) {
+    .logout-container {
+        padding: 10px;
+        min-height: 70vh;
+    }
+
+    .logout-card {
+        margin: 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 20px !important;
+    }
+
+    .logout-icon .fa-3x {
+        font-size: 2rem;
+        /* Plus petit sur mobile */
+    }
+
+    h2 {
+        font-size: 1.25rem;
+        /* Texte plus petit */
+        margin-bottom: 1rem !important;
+    }
+
+    p.text-muted {
+        font-size: 0.875rem;
+        /* Texte plus petit */
+        margin-bottom: 1.5rem !important;
+    }
+
+    .d-flex {
+        flex-direction: column;
+        gap: 10px !important;
+    }
+
+    .btn-lg {
+        font-size: 0.875rem;
+        /* Boutons plus petits */
+        padding: 8px 16px;
+        width: 100%;
+    }
+
+    .btn-lg i {
+        font-size: 0.875rem;
+        /* Icônes plus petites */
+        margin-right: 5px !important;
+    }
+
+    .mt-5 {
+        margin-top: 2rem !important;
+    }
+
+    small {
+        font-size: 0.75rem;
+        /* Texte très petit */
+    }
+}

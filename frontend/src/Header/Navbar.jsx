@@ -28,6 +28,9 @@ export default function Navbar() {
                             <Link className="nav-link" to="/profile">Profile</Link>
                         </li>
                         <li className="nav-item">
+                            <Link className="nav-link" to="/regester">Sign Up</Link>
+                        </li>
+                        <li className="nav-item">
                             <Link className="nav-link" to="/logout">Logout</Link>
                         </li>
                     </ul>
