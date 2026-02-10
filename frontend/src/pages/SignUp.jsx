@@ -8,7 +8,7 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [terms, setTerms] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!name || !email || !password) {
@@ -21,14 +21,33 @@ export default function SignUp() {
             return;
         }
 
-        console.log('Form Data:', { name, email, password, terms });
+        try {
+            const res = await fetch('http://localhost:4000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, password })
+            });
 
-        setName('');
-        setEmail('');
-        setPassword('');
-        setTerms(false);
+            const data = await res.json();
+            console.log(data);
 
-        alert('Account created successfully!');
+            if (res.ok) {
+                alert(data.message);
+                // Reset form after successful registration
+                setName('');
+                setEmail('');
+                setPassword('');
+                setTerms(false);
+            } else {
+                alert(data.error);
+            }
+
+        } catch (err) {
+            console.error("Error:", err);
+            alert("Something went wrong");
+        }
     };
 
     return (
