@@ -1,20 +1,56 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import './Login.css';
-import { Link } from 'react-router-dom';
 
-export default function SignUp() {
+export default function Login() {
+    const navigate = useNavigate();
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
+        if (!email || !password) {
+            toast.error('Please fill in all fields');
+            return;
+        }
+
+        try {
+            const res = await fetch('http://localhost:4000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                localStorage.setItem("token", data.token);
+                toast.success("Login successful");
+                navigate("/products");
+            } else {
+                toast.error(data.error);
+            }
+
+        } catch (err) {
+            console.error(err);
+            toast.error("Something went wrong");
+        }
+    };
 
     return (
         <div className="signup-container">
             <div className="signup-card">
                 <div className="signup-header">
-                    <h2>Create Account</h2>
+                    <h2>Login</h2>
                     <p>Join our community today</p>
                 </div>
 
-                <form className="signup-form" >
+                <form className="signup-form" onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email">Email Address</label>
                         <input
@@ -22,7 +58,8 @@ export default function SignUp() {
                             id="email"
                             placeholder="Enter your email"
                             className="form-control"
-
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
@@ -31,9 +68,10 @@ export default function SignUp() {
                         <input
                             type="password"
                             id="password"
-                            placeholder="Create a password"
+                            placeholder="Enter your password"
                             className="form-control"
-
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
 
@@ -43,8 +81,8 @@ export default function SignUp() {
 
                     <div className="signup-footer">
                         <p>
-                            Already have an account?
-                            <Link to="/regester" className="login-link">SignUp</Link>
+                            Don't have an account?
+                            <Link to="/register" className="login-link"> SignUp</Link>
                         </p>
                     </div>
                 </form>

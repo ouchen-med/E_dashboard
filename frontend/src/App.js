@@ -13,14 +13,21 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
+
 
 
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    return JSON.parse(atob(token.split('.')[1]));
+  });
   return (
    <div className="d-flex flex-column min-vh-100">
       <BrowserRouter>
-        <Navbar />
+        <Navbar user={user} setUser={setUser} />
         <div className="container flex-grow-1">
           <Routes>
             <Route path="/" element={<Products />} />

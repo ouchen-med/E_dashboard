@@ -16,7 +16,8 @@ mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
-app.post('/register',userController.register)
+app.post('/register', userController.register)
+app.post('/login',userController.login)
 
 // Start server
 app.listen(PORT, () => {
