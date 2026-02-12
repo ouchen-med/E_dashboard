@@ -167,3 +167,21 @@
         font-size: 15px;
     }
 }
+
+
+/* alter */
+
+.custom-toast-success {
+    background: linear-gradient(135deg, #00c853, #b2ff59) !important;
+    color: #1b1b1b;
+    font-weight: bold;
+    border-radius: 12px;
+    font-family: "Comic Sans MS", cursive;
+}
+
+.custom-toast-error {
+    background: linear-gradient(135deg, #ff1744, #ff8a80) !important;
+    color: white;
+    font-weight: bold;
+    border-radius: 12px;
+}

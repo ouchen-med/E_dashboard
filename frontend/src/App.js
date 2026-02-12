@@ -10,6 +10,9 @@ import Logout from "./pages/Logout";
 import Navbar from './Header/Navbar';
 import Footer from './Footer/Footer';
 import SignUp from './pages/SignUp';
+import Login from './pages/Login';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -27,10 +30,13 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/regester" element={<SignUp />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path='/login' element={<Login/>} />
           </Routes>
         </div>
         <Footer />
       </BrowserRouter>
+      <ToastContainer position="top-right" autoClose={3000} />
+
     </div>
   );
 }

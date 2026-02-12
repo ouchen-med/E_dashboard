@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import './SignUp.css';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+
 
 export default function SignUp() {
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,12 +17,12 @@ export default function SignUp() {
         e.preventDefault();
 
         if (!name || !email || !password) {
-            alert('Please fill in all fields');
+            toast.error('Please fill in all fields');
             return;
         }
 
         if (!terms) {
-            alert('You must agree to the Terms & Conditions');
+            toast.error('You must agree to the Terms & Conditions')
             return;
         }
 
@@ -31,17 +36,18 @@ export default function SignUp() {
             });
 
             const data = await res.json();
-            console.log(data);
 
             if (res.ok) {
-                alert(data.message);
-                // Reset form after successful registration
+                toast.success(data.message, {
+                    className: "custom-toast-success",
+                });
                 setName('');
                 setEmail('');
                 setPassword('');
                 setTerms(false);
+                navigate("/products");
             } else {
-                alert(data.error);
+                toast.error(data.error)
             }
 
         } catch (err) {
