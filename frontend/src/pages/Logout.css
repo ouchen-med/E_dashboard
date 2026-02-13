@@ -6,14 +6,13 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: #f8f9fa;
 }
 
 .logout-card {
     width: 100%;
     max-width: 400px;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
+    border: 1px solid #cdd1d5;
+    border-radius: 10px;
 }
 
 .logout-icon {
@@ -35,7 +34,7 @@ p.text-muted {
 }
 
 .btn-primary {
-    background-color: #dc3545;
+    background-color: #dc2638;
     border-color: #dc3545;
 }
 
@@ -44,7 +43,6 @@ p.text-muted {
     border-color: #bd2130;
 }
 
-/* Mobile styles */
 @media (max-width: 576px) {
     .logout-container {
         padding: 10px;
@@ -62,18 +60,15 @@ p.text-muted {
 
     .logout-icon .fa-3x {
         font-size: 2rem;
-        /* Plus petit sur mobile */
     }
 
     h2 {
         font-size: 1.25rem;
-        /* Texte plus petit */
         margin-bottom: 1rem !important;
     }
 
     p.text-muted {
         font-size: 0.875rem;
-        /* Texte plus petit */
         margin-bottom: 1.5rem !important;
     }
 
@@ -84,14 +79,12 @@ p.text-muted {
 
     .btn-lg {
         font-size: 0.875rem;
-        /* Boutons plus petits */
         padding: 8px 16px;
         width: 100%;
     }
 
     .btn-lg i {
         font-size: 0.875rem;
-        /* Icônes plus petites */
         margin-right: 5px !important;
     }
 
@@ -101,6 +94,5 @@ p.text-muted {
 
     small {
         font-size: 0.75rem;
-        /* Texte très petit */
     }
 }
