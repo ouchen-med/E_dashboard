@@ -2,10 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Nav.css';
 export default function Navbar({ user, setUser }) {
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        setUser(null);
-    };
+
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
@@ -30,7 +27,7 @@ export default function Navbar({ user, setUser }) {
                             <>
                                 <li className="nav-item"><Link className="nav-link" to="/products">Products</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/profile">Profile</Link></li>
-                                <li className="nav-item"><button className="nav-link btn btn-link" onClick={handleLogout}>Logout</button></li>
+                                <li className="nav-item"><Link className="nav-link" to="/logout">Logout</Link></li>
                             </>
                         )}
 
@@ -40,7 +37,7 @@ export default function Navbar({ user, setUser }) {
                                 <li className="nav-item"><Link className="nav-link" to="/add-product">Add Product</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/update-product">Update Product</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/profile">Profile</Link></li>
-                                <li className="nav-item"><button className="nav-link btn btn-link" onClick={handleLogout}>Logout</button></li>
+                                <li className="nav-item"><Link className="nav-link" to="/logout">Logout</Link></li>
                             </>
                         )}
                     </ul>

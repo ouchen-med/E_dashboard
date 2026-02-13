@@ -1,8 +1,15 @@
-import React from 'react';
 import './Logout.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function Logout() {
+export default function Logout({ setUser }) {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token"); // 🔥 حذف JWT
+        setUser(null);                     // 🔥 تحديث state المستخدم
+        navigate("/login");                // 🔥 تحويل للصفحة login
+    };
+
     return (
         <div className="logout-container">
             <div className="card shadow-lg logout-card">
@@ -18,7 +25,10 @@ export default function Logout() {
                     </p>
 
                     <div className="d-flex justify-content-center gap-3">
-                        <button className="btn btn-primary btn-lg px-4">
+                        <button
+                            className="btn btn-primary btn-lg px-4"
+                            onClick={handleLogout}
+                        >
                             <i className="fas fa-check me-2"></i>
                             Confirm Logout
                         </button>

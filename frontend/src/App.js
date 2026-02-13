@@ -44,7 +44,7 @@ function App() {
             <Route path="/update-product" element={<UpdateProduct />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/regester" element={<SignUp setUser={setUser} />} />
-            <Route path="/logout" element={<Logout />} />
+            <Route path="/logout" element={<Logout setUser={setUser} />} />
             <Route path="/login" element={<Login setUser={setUser} />} />
 
           </Routes>
