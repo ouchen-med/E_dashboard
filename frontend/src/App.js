@@ -20,10 +20,18 @@ import { useState } from "react";
 
 function App() {
   const [user, setUser] = useState(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return null;
-    return JSON.parse(atob(token.split('.')[1]));
-  });
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload;
+  } catch (err) {
+    console.error("Invalid token", err);
+    localStorage.removeItem("token");
+    return null;
+  }
+});
+
   return (
    <div className="d-flex flex-column min-vh-100">
       <BrowserRouter>
@@ -35,9 +43,10 @@ function App() {
             <Route path="/add-product" element={<AddProduct />} />
             <Route path="/update-product" element={<UpdateProduct />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/regester" element={<SignUp />} />
+            <Route path="/regester" element={<SignUp setUser={setUser} />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path='/login' element={<Login/>} />
+            <Route path="/login" element={<Login setUser={setUser} />} />
+
           </Routes>
         </div>
         <Footer />

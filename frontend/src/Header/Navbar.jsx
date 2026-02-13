@@ -20,6 +20,7 @@ export default function Navbar({ user, setUser }) {
                     <ul className="navbar-nav ms-auto">
                         {!user && (
                             <>
+                                <li className="nav-item"><Link className="nav-link" to="/products">Products</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/regester">Sign Up</Link></li>
                             </>
@@ -27,6 +28,7 @@ export default function Navbar({ user, setUser }) {
 
                         {user && user.role === 'USER' && (
                             <>
+                                <li className="nav-item"><Link className="nav-link" to="/products">Products</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/profile">Profile</Link></li>
                                 <li className="nav-item"><button className="nav-link btn btn-link" onClick={handleLogout}>Logout</button></li>
                             </>

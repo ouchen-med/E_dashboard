@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 
 
-export default function SignUp() {
+export default function SignUp({ setUser }) {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -38,7 +38,9 @@ export default function SignUp() {
             const data = await res.json();
 
             if (res.ok) {
-                localStorage.setItem("token", data.token); // 🔥 حفظ JWT
+                localStorage.setItem("token", data.token);
+                const userData = JSON.parse(atob(data.token.split('.')[1]));
+                setUser(userData);
                 toast.success(data.message, {
                     className: "custom-toast-success",
                 });

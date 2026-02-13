@@ -3,9 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './Login.css';
 
-export default function Login() {
+export default function Login({ setUser }) {
     const navigate = useNavigate();
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -27,12 +26,17 @@ export default function Login() {
             });
 
             const data = await res.json();
-
             if (res.ok) {
                 localStorage.setItem("token", data.token);
+
+                const userData = JSON.parse(atob(data.token.split('.')[1]));
+                setUser(userData);
+
                 toast.success("Login successful");
                 navigate("/products");
-            } else {
+            }
+
+            else {
                 toast.error(data.error);
             }
 
@@ -82,7 +86,7 @@ export default function Login() {
                     <div className="signup-footer">
                         <p>
                             Don't have an account?
-                            <Link to="/register" className="login-link"> SignUp</Link>
+                            <Link to="/regester" className="login-link"> SignUp</Link>
                         </p>
                     </div>
                 </form>
