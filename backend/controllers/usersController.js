@@ -14,7 +14,6 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // أول Admin فقط
     const adminExists = await User.findOne({ role: userRoles.ADMIN });
     let role = userRoles.USER;
     if (!adminExists) {
@@ -93,5 +92,14 @@ const login = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
-
-module.exports = { register, login };
+const profile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        res.json(user);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+module.exports = { register, login,profile };

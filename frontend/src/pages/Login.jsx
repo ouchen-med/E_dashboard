@@ -7,7 +7,6 @@ export default function Login({ setUser }) {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -17,27 +16,28 @@ export default function Login({ setUser }) {
         }
 
         try {
-            const res = await fetch('http://localhost:4000/login', {
+            const res = await fetch('http://localhost:4000/users/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
             });
 
             const data = await res.json();
-            if (res.ok) {
+
+            if (!res.ok) {
+                toast.error(data.error || "Login failed");
+                return;
+            }
+
+            if (data.token && data.user) {
                 localStorage.setItem("token", data.token);
 
-                const userData = JSON.parse(atob(data.token.split('.')[1]));
-                setUser(userData);
+                setUser(data.user);
 
                 toast.success("Login successful");
                 navigate("/products");
-            }
-
-            else {
-                toast.error(data.error);
+            } else {
+                toast.error("Login failed, token or user missing");
             }
 
         } catch (err) {

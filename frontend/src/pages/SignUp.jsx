@@ -27,7 +27,7 @@ export default function SignUp({ setUser }) {
         }
 
         try {
-            const res = await fetch('http://localhost:4000/register', {
+            const res = await fetch('http://localhost:4000/users/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

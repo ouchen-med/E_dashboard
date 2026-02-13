@@ -6,6 +6,7 @@ require('dotenv').config();
 const userController = require('./controllers/usersController')
 const PORT = process.env.PORT || 4000;
 const MONGO_URI = process.env.MONGO_URI;
+const usersRouter = require('./routes/user.route')
 
 const app = express();
 
@@ -15,9 +16,10 @@ app.use(express.json());
 mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
+  
+app.use('/users', usersRouter)
 
-app.post('/register', userController.register)
-app.post('/login',userController.login)
+
 
 // Start server
 app.listen(PORT, () => {
