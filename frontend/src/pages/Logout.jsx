@@ -5,9 +5,9 @@ export default function Logout({ setUser }) {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem("token"); // 🔥 حذف JWT
-        setUser(null);                     // 🔥 تحديث state المستخدم
-        navigate("/login");                // 🔥 تحويل للصفحة login
+        localStorage.removeItem("token"); 
+        setUser(null);                       
+        navigate("/login");                
     };
 
     return (

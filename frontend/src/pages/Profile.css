@@ -1,78 +1,221 @@
 .profile-container {
     display: flex;
     justify-content: center;
-    padding: 40px;
-    background: #fafafa;
+    align-items: center;
     min-height: 100vh;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .profile-card {
     background: white;
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .profile-header {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid #f1f5f9;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 600px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 .profile-image-wrapper {
-    position: relative;
     text-align: center;
 }
 
 .profile-image {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #ff4d6d;
+    border: 3px solid #4361ee;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15);
 }
 
 .upload-btn {
-    display: block;
+    display: inline-block;
     margin-top: 10px;
-    font-size: 14px;
-    color: #0095f6;
+    font-size: 13px;
+    margin-left: 10px;
+    color: #4361ee;
     cursor: pointer;
     font-weight: 500;
+    border: solid 1px rgb(190, 183, 183);
+    border-radius: 15px;
+    padding: 4px;
+}
+
+.upload-btn:hover {
+    text-decoration: underline;
 }
 
 .profile-info h2 {
-    margin: 0;
-    font-size: 28px;
+    margin: 0 0 8px 0;
+    font-size: 26px;
+    color: #1e293b;
 }
 
 .email {
-    color: gray;
-    margin: 5px 0;
+    margin: 0 0 12px 0;
+    color: #64748b;
+    font-size: 15px;
 }
 
 .role-badge {
-    background: #ff4d6d;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 30px;
     font-size: 13px;
+    font-weight: 500;
 }
 
-.profile-stats {
+.role-badge.admin {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.role-badge.user {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.welcome-section {
     display: flex;
-    justify-content: space-around;
-    margin-top: 40px;
-    text-align: center;
+    flex-direction: column;
+    gap: 25px;
 }
 
-.profile-stats h4 {
+.welcome-header h3 {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wave-emoji {
+    animation: wave 2s infinite;
+    display: inline-block;
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(15deg);
+    }
+}
+
+.welcome-subtitle {
     margin: 0;
+    color: #fbfbfb;
+    font-size: 15px;
+}
+
+.role-card {
+    padding: 20px;
+    border-radius: 16px;
+    background: #727679;
+}
+
+.role-card.admin {
+    background: linear-gradient(135deg, #f0f9ff 0%, #dbe0e3 100%);
+}
+
+.role-card.user {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.role-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.role-icon {
     font-size: 20px;
 }
 
-.profile-stats span {
-    color: gray;
+.role-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: #1e293b;
+}
+
+.role-description {
+    margin: 0 0 15px 0;
+    color: #475569;
     font-size: 14px;
+    line-height: 1.5;
+}
+
+.capabilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.capability {
+    background: white;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    color: #334155;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    border: 1px solid #e2e8f0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.stat-box {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+.stat-box h4 {
+    margin: 0 0 5px 0;
+    font-size: 22px;
+    color: #1e293b;
+}
+
+.stat-box span {
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #64748b;
+    font-size: 16px;
 }
