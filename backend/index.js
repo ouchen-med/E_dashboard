@@ -3,13 +3,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-const userController = require('./controllers/usersController')
 const PORT = process.env.PORT || 4000;
 const MONGO_URI = process.env.MONGO_URI;
 const usersRouter = require('./routes/user.route');
 const productrouter = require('./routes/product.route');
+//imgs:
+const path = require('path');
+
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(cors({ origin: 'http://localhost:3000' })); 
 app.use(express.json()); 

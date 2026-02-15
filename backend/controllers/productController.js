@@ -15,12 +15,13 @@ const getProducts = async (req, res) => {
 };
 
 //  Add new product 
+
 const addProduct = async (req, res) => {
   try {
-    const { name, description, price, discount, stock, image } = req.body;
+    const { name, description, price, discount, stock } = req.body;
 
-    if (!name || !description || !price || !stock || !image) {
-      return res.status(400).json({ success: false, message: "All required fields must be filled" });
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'Image is required' });
     }
 
     const newProduct = new Product({
@@ -29,7 +30,7 @@ const addProduct = async (req, res) => {
       price,
       discount: discount || 0,
       stock,
-      image
+      image: req.file.path // المسار اللي خزنه Multer
     });
 
     const savedProduct = await newProduct.save();
@@ -39,6 +40,7 @@ const addProduct = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 //  Delete product 
 const deleteProduct = async (req, res) => {
