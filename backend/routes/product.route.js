@@ -3,6 +3,8 @@ const router = express.Router();
 const productController = require('../controllers/productController');
 const multer = require('multer')
 const path = require('path');
+const verifyToken  = require('../middlewares/verifyToken');
+
 
 
 
@@ -32,8 +34,8 @@ const upload = multer({
 })
 
 router.get('/', productController.getProducts);      
-router.post('/',upload.single('image'), productController.addProduct);       
-router.delete('/:id', productController.deleteProduct); 
-router.put('/:id', productController.updateProduct);   
+router.post('/',verifyToken,upload.single('image'), productController.addProduct);       
+router.delete('/:id',verifyToken, productController.deleteProduct); 
+router.put('/:id',verifyToken, productController.updateProduct);   
 
 module.exports = router;

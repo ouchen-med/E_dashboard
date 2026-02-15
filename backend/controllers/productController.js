@@ -1,4 +1,8 @@
 const Product = require('../models/Product');
+const fs = require('fs');
+const path = require('path');
+
+
 
 // ====== Get all products ======
 const getProducts = async (req, res) => {
@@ -52,13 +56,22 @@ const deleteProduct = async (req, res) => {
       return res.status(404).json({ success: false, message: "Product not found" });
     }
 
+    if (product.image) {
+      const imagePath = path.join(__dirname, '..', product.image); 
+      fs.unlink(imagePath, (err) => {
+        if (err) console.log('Error deleting image:', err);
+      });
+    }
+  
     await product.deleteOne();
+
     res.status(200).json({ success: true, message: "Product deleted successfully" });
 
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 //  Update product 
 const updateProduct = async (req, res) => {
@@ -67,13 +80,19 @@ const updateProduct = async (req, res) => {
     const updates = req.body;
 
     const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).json({ success: false, message: "Product not found" });
+    if (!product) return res.status(404).json({ success: false, message: "Product not found" });
+
+    if (req.file) {
+      if (product.image) {
+        const oldImagePath = path.join(__dirname, '..', product.image);
+        fs.unlink(oldImagePath, (err) => {
+          if (err) console.log('Error deleting old image:', err);
+        });
+      }
+      updates.image = req.file.path; 
     }
 
-    //  updates
     Object.assign(product, updates);
-
     const updatedProduct = await product.save();
     res.status(200).json({ success: true, data: updatedProduct });
 
