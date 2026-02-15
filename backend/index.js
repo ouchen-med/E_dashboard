@@ -6,7 +6,8 @@ require('dotenv').config();
 const userController = require('./controllers/usersController')
 const PORT = process.env.PORT || 4000;
 const MONGO_URI = process.env.MONGO_URI;
-const usersRouter = require('./routes/user.route')
+const usersRouter = require('./routes/user.route');
+const productrouter = require('./routes/product.route');
 
 const app = express();
 
@@ -17,7 +18,9 @@ mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
   
-app.use('/users', usersRouter)
+app.use('/users', usersRouter);
+app.use('/products', productrouter)
+
 
 
 
