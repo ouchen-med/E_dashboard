@@ -35,7 +35,6 @@ export default function Navbar({ user, setUser }) {
                             <>
                                 <li className="nav-item"><Link className="nav-link" to="/products">Products</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/add-product">Add Product</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to="/update-product">Update Product</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/profile">Profile</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/logout">Logout</Link></li>
                             </>

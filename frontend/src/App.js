@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Products from "./pages/Products";
 import AddProduct from "./pages/AddProduct";
-import UpdateProduct from "./pages/UpdateProduct";
 import Profile from "./pages/Profile";
 import Logout from "./pages/Logout";
 import Navbar from './Header/Navbar';
@@ -39,9 +38,9 @@ function App() {
         <div className="container flex-grow-1">
           <Routes>
             <Route path="/" element={<Products />} />
-            <Route path="/products" element={<Products />} />
+            <Route path="/products" element={<Products user={user} setUser={setUser} />} />
+
             <Route path="/add-product" element={<AddProduct />} />
-            <Route path="/update-product" element={<UpdateProduct />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/regester" element={<SignUp setUser={setUser} />} />
             <Route path="/logout" element={<Logout setUser={setUser} />} />
