@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./AdminProducts.css"; // Import custom CSS
+import Loading from "../Loading/Loading";
 
 export default function AdminProducts() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const loadingStartTime = useRef(Date.now()); // Track when loading started
 
     useEffect(() => {
         fetchProducts();
@@ -12,12 +14,29 @@ export default function AdminProducts() {
 
     const fetchProducts = async () => {
         try {
+            // Fetch products from API
             const res = await axios.get("http://localhost:4000/products");
             setProducts(res.data.data);
+
+            const elapsedTime = Date.now() - loadingStartTime.current;
+            const remainingTime = Math.max(0, 3000 - elapsedTime); // 3 seconds minimum
+
+            if (remainingTime > 0) {
+                setTimeout(() => {
+                    setLoading(false);
+                }, remainingTime);
+            } else {
+                setLoading(false);
+            }
         } catch (error) {
             console.error("Error fetching products:", error);
-        } finally {
-            setLoading(false);
+            // Still wait for minimum 3 seconds even on error
+            const elapsedTime = Date.now() - loadingStartTime.current;
+            const remainingTime = Math.max(0, 3000 - elapsedTime);
+
+            setTimeout(() => {
+                setLoading(false);
+            }, remainingTime);
         }
     };
 
@@ -33,12 +52,7 @@ export default function AdminProducts() {
         }
     };
 
-    if (loading) return (
-        <div className="admin-loading">
-            <div className="spinner"></div>
-            <p>Loading products...</p>
-        </div>
-    );
+    if (loading) return <Loading></Loading>;
 
     return (
         <div className="admin-container">

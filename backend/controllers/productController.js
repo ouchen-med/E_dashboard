@@ -2,8 +2,6 @@ const Product = require('../models/Product');
 const fs = require('fs');
 const path = require('path');
 
-
-
 // ====== Get all products ======
 const getProducts = async (req, res) => {
   try {
@@ -17,24 +15,20 @@ const getProducts = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 //  Add new product 
-
 const addProduct = async (req, res) => {
   try {
     const { name, description, price, discount, stock } = req.body;
-
     if (!req.file) {
       return res.status(400).json({ success: false, message: 'Image is required' });
     }
-
     const newProduct = new Product({
       name,
       description,
       price,
       discount: discount || 0,
       stock,
-      image: req.file.path // المسار اللي خزنه Multer
+      image: req.file.path 
     });
 
     const savedProduct = await newProduct.save();

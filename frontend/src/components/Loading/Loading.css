@@ -1,0 +1,125 @@
+.loading_container {
+    display: flex;
+    /* main row: image + content */
+    flex-wrap: wrap;
+    /* wrap if needed */
+    gap: 40px;
+    max-width: 1200px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    margin: 100px auto;
+}
+
+/* Image placeholder */
+.loading_image {
+    flex: 1 1 400px;
+    /* flexible width, min 400px */
+    height: 600px;
+    border-radius: 15px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Content placeholder */
+.loading_content {
+    flex: 1 1 400px;
+    /* flexible width, min 400px */
+    display: flex;
+    /* column layout for lines */
+    flex-direction: column;
+    gap: 15px;
+    /* spacing between lines */
+}
+
+/* Lines shimmer */
+.loading_line {
+    height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    width: 100%;
+}
+
+.loading_line:nth-child(2) {
+    width: 80%;
+}
+
+.loading_line:nth-child(3) {
+    width: 90%;
+}
+
+.loading_line:nth-child(4) {
+    width: 70%;
+}
+
+.loading_line:nth-child(5) {
+    width: 60%;
+}
+
+.loading_line:nth-child(6) {
+    width: 50%;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Responsive: stack on mobile */
+@media (max-width: 768px) {
+
+    .loading_image,
+    .loading_content {
+        flex: 1 1 100%;
+        /* full width on small screens */
+        height: 400px;
+    }
+}
+
+.cards_loading_wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 40px;
+}
+
+.card_loading {
+    background: #fff;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.card_loading_image {
+    height: 200px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.card_loading_line {
+    height: 20px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.card_loading_line.small {
+    width: 60%;
+}

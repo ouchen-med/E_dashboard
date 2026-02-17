@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "../Loading/Loading";
+import CardsLoading from "../Loading/CardsLoading";
 
 export default function UserProduct() {
     const [products, setProducts] = useState([]);
@@ -8,10 +10,20 @@ export default function UserProduct() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await axios.get("http://localhost:4000/products");
+                // Create a timer promise that resolves after 3 seconds
+                const timerPromise = new Promise(resolve => setTimeout(resolve, 3000));
+
+                // Fetch products from API
+                const productsPromise = axios.get("http://localhost:4000/products");
+
+                // Wait for both the API call AND at least 3 seconds
+                const [res] = await Promise.all([productsPromise, timerPromise]);
+
                 setProducts(res.data.data);
             } catch (error) {
                 console.error("Error fetching products:", error);
+                // Still wait for 3 seconds even on error
+                await new Promise(resolve => setTimeout(resolve, 3000));
             } finally {
                 setLoading(false);
             }
@@ -20,7 +32,7 @@ export default function UserProduct() {
         fetchProducts();
     }, []);
 
-    if (loading) return <h3>Loading...</h3>;
+    if (loading) return <CardsLoading></CardsLoading>;
 
     return (
         <div className="container mt-4">
