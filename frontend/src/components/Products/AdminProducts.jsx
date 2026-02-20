@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./AdminProducts.css"; // Import custom CSS
 import Loading from "../Loading/Loading";
+import { Link } from "react-router-dom";
 
 export default function AdminProducts() {
     const [products, setProducts] = useState([]);
@@ -58,9 +59,9 @@ export default function AdminProducts() {
         <div className="admin-container">
             <div className="admin-header">
                 <h2>Products Management</h2>
-                <button className="btn-add">
+                <Link to="/add-product" className="btn btn-success mb-3">
                     + Add New Product
-                </button>
+                </Link>
             </div>
 
             <div className="table-wrapper">
