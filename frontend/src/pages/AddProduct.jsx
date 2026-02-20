@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import './AddProduct.css'; // Create this CSS file
+import { useNavigate } from 'react-router-dom';
 
 export default function AddProduct() {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -56,6 +59,8 @@ export default function AddProduct() {
             setFormData({ name: '', description: '', price: '', discount: '', stock: '' });
             setImage(null);
             setPreview(null);
+            navigate("/products");
+
         } catch (error) {
             toast.error(error.response?.data?.message || error.message);
         }

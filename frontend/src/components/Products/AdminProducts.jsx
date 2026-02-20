@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 
 
 
+
 export default function AdminProducts() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -27,7 +28,7 @@ export default function AdminProducts() {
             setProducts(res.data.data);
 
             const elapsedTime = Date.now() - loadingStartTime.current;
-            const remainingTime = Math.max(0, 3000 - elapsedTime); // 3 seconds minimum
+            const remainingTime = Math.max(0, 2000 - elapsedTime); // 3 seconds minimum
 
             if (remainingTime > 0) {
                 setTimeout(() => {
@@ -40,7 +41,7 @@ export default function AdminProducts() {
             console.error("Error fetching products:", error);
             // Still wait for minimum 3 seconds even on error
             const elapsedTime = Date.now() - loadingStartTime.current;
-            const remainingTime = Math.max(0, 3000 - elapsedTime);
+            const remainingTime = Math.max(0, 2000 - elapsedTime);
 
             setTimeout(() => {
                 setLoading(false);
@@ -77,7 +78,7 @@ export default function AdminProducts() {
                             prev.filter(product => product._id !== id)
                         );
 
-                        toast.success("Product deleted successfully ✅");
+                        toast.success("Product deleted successfully ");
 
                         Swal.fire(
                             "Deleted!",
@@ -85,12 +86,12 @@ export default function AdminProducts() {
                             "success"
                         );
                     } else {
-                        toast.error(res.data.message || "Failed to delete product ❌");
+                        toast.error(res.data.message || "Failed to delete product ");
                     }
 
                 } catch (error) {
                     console.error("Error deleting product:", error);
-                    toast.error("Error deleting product ❌");
+                    toast.error("Error deleting product ");
                 }
             }
 
