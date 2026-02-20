@@ -39,7 +39,6 @@ export default function AdminProducts() {
             }
         } catch (error) {
             console.error("Error fetching products:", error);
-            // Still wait for minimum 3 seconds even on error
             const elapsedTime = Date.now() - loadingStartTime.current;
             const remainingTime = Math.max(0, 2000 - elapsedTime);
 
