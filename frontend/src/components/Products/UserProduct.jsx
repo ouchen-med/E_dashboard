@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "../Loading/Loading";
 import CardsLoading from "../Loading/CardsLoading";
+import './UserProduct.css'
 
 export default function UserProduct() {
     const [products, setProducts] = useState([]);
@@ -35,26 +35,33 @@ export default function UserProduct() {
     if (loading) return <CardsLoading></CardsLoading>;
 
     return (
-        <div className="container mt-4">
-            <div className="row">
+        <div className="container mt-5">
+            <div className="row g-4">
                 {products.map((product) => (
-                    <div className="col-md-4 mb-4" key={product._id}>
-                        <div className="card shadow-sm">
-                            <img
-                                src={`http://localhost:4000/${product.image}`}
-                                alt={product.name}
-                                className="card-img-top"
-                                style={{ height: "200px", objectFit: "cover" }}
-                            />
-                            <div className="card-body">
+                    <div className="col-lg-4 col-md-6" key={product._id}>
+                        <div className="custom-card">
+                            <div className="image-wrapper">
+                                <img
+                                    src={`http://localhost:4000/${product.image}`}
+                                    alt={product.name}
+                                />
+                            </div>
+
+                            <div className="card-content">
                                 <h5>{product.name}</h5>
                                 <p>{product.description}</p>
-                                <h6>${product.price}</h6>
+                                <div className="card-footer">
+                                    <span className="price">${product.price}</span>
+                                    <button className="btn btn-dark btn-sm">
+                                        Add to Cart
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
         </div>
+
     );
 }
