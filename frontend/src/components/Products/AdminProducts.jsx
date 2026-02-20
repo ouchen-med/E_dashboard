@@ -3,6 +3,13 @@ import axios from "axios";
 import "./AdminProducts.css"; // Import custom CSS
 import Loading from "../Loading/Loading";
 import { Link } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+
+
+
 
 export default function AdminProducts() {
     const [products, setProducts] = useState([]);
@@ -41,18 +48,54 @@ export default function AdminProducts() {
         }
     };
 
-    const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this product?")) {
-            try {
-                await axios.delete(`http://localhost:4000/products/${id}`);
-                setProducts(products.filter(product => product._id !== id));
-            } catch (error) {
-                console.error("Error deleting product:", error);
-                alert("Error deleting product");
-            }
-        }
-    };
 
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+
+            if (result.isConfirmed) {
+                try {
+                    const token = localStorage.getItem("token");
+
+                    const res = await axios.delete(
+                        `http://localhost:4000/products/${id}`,
+                        {
+                            headers: { Authorization: `Bearer ${token}` }
+                        }
+                    );
+
+                    if (res.data.success) {
+                        setProducts(prev =>
+                            prev.filter(product => product._id !== id)
+                        );
+
+                        toast.success("Product deleted successfully ✅");
+
+                        Swal.fire(
+                            "Deleted!",
+                            "Your product has been deleted.",
+                            "success"
+                        );
+                    } else {
+                        toast.error(res.data.message || "Failed to delete product ❌");
+                    }
+
+                } catch (error) {
+                    console.error("Error deleting product:", error);
+                    toast.error("Error deleting product ❌");
+                }
+            }
+
+        });
+    };
     if (loading) return <Loading></Loading>;
 
     return (
@@ -97,14 +140,15 @@ export default function AdminProducts() {
                                 </td>
                                 <td className="product-actions">
                                     <button className="btn-edit" title="Edit">
-                                        ✏️
+                                        <CiEdit />
                                     </button>
                                     <button
                                         className="btn-delete"
                                         title="Delete"
                                         onClick={() => handleDelete(product._id)}
                                     >
-                                        🗑️
+                                        <MdDelete />
+
                                     </button>
                                 </td>
                             </tr>
