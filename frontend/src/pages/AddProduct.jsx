@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import './AddProduct.css'; // Create this CSS file
 
 export default function AddProduct() {
     const [formData, setFormData] = useState({
@@ -22,14 +24,16 @@ export default function AddProduct() {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setImage(file);
-        setPreview(URL.createObjectURL(file));
+        if (file) {
+            setImage(file);
+            setPreview(URL.createObjectURL(file));
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!image) {
-            setMessage('⚠️ Please select an image');
+            toast.error('Please select an image');
             return;
         }
 
@@ -48,106 +52,161 @@ export default function AddProduct() {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
-            setMessage('✅ Product added successfully!');
+            toast.success("Product added successfully!");
             setFormData({ name: '', description: '', price: '', discount: '', stock: '' });
             setImage(null);
             setPreview(null);
         } catch (error) {
-            setMessage('❌ Error: ' + error.response?.data?.message || error.message);
+            toast.error(error.response?.data?.message || error.message);
         }
     };
 
     return (
-        <div className="container mt-5">
-            <div className="card shadow-sm mx-auto" style={{ maxWidth: '600px' }}>
-                <div className="card-body">
-                    <h3 className="card-title mb-4">Add New Product</h3>
+        <div className="add-product-container">
+            <div className="add-product-card">
+                <div className="card-header">
+                    <h2>Add New Product</h2>
+                    <p className="subtitle">Fill in the details to add a new product to your inventory</p>
+                </div>
 
-                    {message && <div className="alert alert-info">{message}</div>}
+                {message && <div className="alert-message">{message}</div>}
 
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label className="form-label">Product Name</label>
+                <form onSubmit={handleSubmit} className="product-form">
+                    <div className="form-group">
+                        <label className="form-label">
+                            <span className="label-text">Product Name</span>
+                            <span className="required-star">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="name"
+                            className="form-input"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Enter product name"
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label className="form-label">
+                            <span className="label-text">Description</span>
+                            <span className="required-star">*</span>
+                        </label>
+                        <textarea
+                            name="description"
+                            className="form-input"
+                            value={formData.description}
+                            onChange={handleChange}
+                            rows="4"
+                            placeholder="Describe your product..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label className="form-label">
+                                <span className="label-text">Price ($)</span>
+                                <span className="required-star">*</span>
+                            </label>
                             <input
-                                type="text"
-                                name="name"
-                                className="form-control"
-                                value={formData.name}
+                                type="number"
+                                name="price"
+                                className="form-input"
+                                value={formData.price}
                                 onChange={handleChange}
+                                placeholder="0.00"
+                                min="0"
+                                step="0.01"
                                 required
                             />
                         </div>
 
-                        <div className="mb-3">
-                            <label className="form-label">Description</label>
-                            <textarea
-                                name="description"
-                                className="form-control"
-                                value={formData.description}
+                        <div className="form-group">
+                            <label className="form-label">
+                                <span className="label-text">Discount (%)</span>
+                            </label>
+                            <input
+                                type="number"
+                                name="discount"
+                                className="form-input"
+                                value={formData.discount}
                                 onChange={handleChange}
-                                rows="3"
+                                placeholder="0"
+                                min="0"
+                                max="100"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">
+                                <span className="label-text">Stock</span>
+                                <span className="required-star">*</span>
+                            </label>
+                            <input
+                                type="number"
+                                name="stock"
+                                className="form-input"
+                                value={formData.stock}
+                                onChange={handleChange}
+                                placeholder="Quantity"
+                                min="0"
                                 required
-                            ></textarea>
+                            />
                         </div>
+                    </div>
 
-                        <div className="row">
-                            <div className="mb-3 col-md-4">
-                                <label className="form-label">Price</label>
-                                <input
-                                    type="number"
-                                    name="price"
-                                    className="form-control"
-                                    value={formData.price}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="mb-3 col-md-4">
-                                <label className="form-label">Discount</label>
-                                <input
-                                    type="number"
-                                    name="discount"
-                                    className="form-control"
-                                    value={formData.discount}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="mb-3 col-md-4">
-                                <label className="form-label">Stock</label>
-                                <input
-                                    type="number"
-                                    name="stock"
-                                    className="form-control"
-                                    value={formData.stock}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div className="mb-3">
-                            <label className="form-label">Product Image</label>
+                    <div className="form-group">
+                        <label className="form-label">
+                            <span className="label-text">Product Image</span>
+                            <span className="required-star">*</span>
+                        </label>
+                        <div className="file-input-container">
                             <input
                                 type="file"
-                                className="form-control"
+                                className="file-input"
                                 accept=".jpg,.jpeg,.png,.webp"
                                 onChange={handleImageChange}
-                                required
+                                id="product-image"
+                                required={!image}
                             />
+                            <label htmlFor="product-image" className="file-input-label">
+                                <svg className="upload-icon" viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+                                </svg>
+                                <span>Choose an image</span>
+                            </label>
                         </div>
+                        <p className="file-hint">Supported formats: JPG, JPEG, PNG, WEBP</p>
+                    </div>
 
-                        {preview && (
-                            <div className="mb-3">
-                                <label className="form-label">Preview:</label>
-                                <img src={preview} alt="Preview" className="img-fluid rounded" />
+                    {preview && (
+                        <div className="preview-container">
+                            <label className="preview-label">Preview:</label>
+                            <div className="preview-wrapper">
+                                <img src={preview} alt="Preview" className="preview-image" />
+                                <button
+                                    type="button"
+                                    className="remove-image"
+                                    onClick={() => {
+                                        setImage(null);
+                                        setPreview(null);
+                                    }}
+                                >
+                                    ×
+                                </button>
                             </div>
-                        )}
+                        </div>
+                    )}
 
-                        <button type="submit" className="btn btn-primary w-100">
-                            Add Product
-                        </button>
-                    </form>
-                </div>
+                    <button type="submit" className="submit-button">
+                        <span>Add Product</span>
+                        <svg className="button-icon" viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </button>
+                </form>
             </div>
         </div>
     );

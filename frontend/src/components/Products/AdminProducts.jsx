@@ -59,9 +59,10 @@ export default function AdminProducts() {
         <div className="admin-container">
             <div className="admin-header">
                 <h2>Products Management</h2>
-                <Link to="/add-product" className="btn btn-success mb-3">
+                <Link to="/add-product" className="btn-add">
                     + Add New Product
                 </Link>
+
             </div>
 
             <div className="table-wrapper">
@@ -115,7 +116,7 @@ export default function AdminProducts() {
             {products.length === 0 && (
                 <div className="empty-state">
                     <p>No products found</p>
-                    <button className="btn-add">Add Your First Product</button>
+                    <Link to="/add-product" className="btn-add">Add Your First Product</Link>
                 </div>
             )}
         </div>
